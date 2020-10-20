@@ -146,6 +146,10 @@ class DMSSiteTreeExtension extends DataExtension
 
     public function onBeforeDelete()
     {
+        if (DMSDocument::config()->keep_documents_on_page_delete) {
+    		return;
+		}
+        
         if (Versioned::current_stage() == 'Live') {
             $existsOnOtherStage = !$this->owner->getIsDeletedFromStage();
         } else {
